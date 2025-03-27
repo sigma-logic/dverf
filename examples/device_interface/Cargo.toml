@@ -1,0 +1,11 @@
+[package]
+name = "init_device"
+version = "0.1.0"
+edition.workspace = true
+
+[dependencies]
+dverf_hackrf.workspace = true
+anyhow.workspace = true
+futures-lite.workspace = true
+
+nusb = { version = "0.1" }

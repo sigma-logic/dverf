@@ -1,0 +1,19 @@
+[workspace]
+resolver = "2"
+members = ["crates/*", "examples/*"]
+
+[workspace.package]
+edition = "2024"
+authors = ["Danil Karpenko <limpix31@gmail.com>"]
+license = "Apache-2.0 OR MIT"
+keywords = ["sdr", "ham", "hackrf"]
+description = "HackRF One toolkit in pure Rust"
+repository = "https://github.com/sigma-logic/dverf.git"
+homepage = "https://github.com/sigma-logic/dverf#readme"
+
+[workspace.dependencies]
+dverf_hackrf = { path = "crates/dverf_hackrf" }
+
+thiserror = { version = "2" }
+futures-lite = { version = "2" }
+anyhow = { version = "1" }

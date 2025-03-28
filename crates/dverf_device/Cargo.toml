@@ -1,5 +1,5 @@
 [package]
-name = "dverf_hackrf"
+name = "dverf_device"
 version = "0.1.0"
 edition.workspace = true
 
@@ -9,3 +9,4 @@ futures-lite.workspace = true
 
 nusb = { version = "0.1" }
 num_enum = { version = "0.7" }
+futures-sink = { version = "0.3" }

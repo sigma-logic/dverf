@@ -1,5 +1,5 @@
 [package]
-name = "init_device"
+name = "simple_receive"
 version = "0.1.0"
 edition.workspace = true
 

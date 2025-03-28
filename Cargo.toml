@@ -12,7 +12,7 @@ repository = "https://github.com/sigma-logic/dverf.git"
 homepage = "https://github.com/sigma-logic/dverf#readme"
 
 [workspace.dependencies]
-dverf_hackrf = { path = "crates/dverf_hackrf" }
+dverf_device = { path = "crates/dverf_device" }
 
 thiserror = { version = "2" }
 futures-lite = { version = "2" }

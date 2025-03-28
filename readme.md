@@ -1,7 +1,7 @@
 # Dverf
 Powerful SDR toolkit designed in pure Rust for HackRF One
 
-### Supported and tested deviced
+### Supported and tested devices
 * [OpenSourceSDRLab R10C](https://opensourcesdrlab.com/products/r10c-hrf-sdr-software-defined-1mhz-to-6ghz-mainboard-development-board-kit)
 
 ## License

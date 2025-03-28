@@ -1,6 +1,7 @@
 use anyhow::{Context, Result};
-use dverf_hackrf::{VENDOR_ID, device::Device};
-use futures_lite::future;
+use dverf_device::{VENDOR_ID, device::Device};
+use futures_concurrency::future::TryJoin;
+use futures_lite::future::block_on;
 
 fn main() -> Result<()> {
 	let device_info = nusb::list_devices()?
@@ -12,9 +13,11 @@ fn main() -> Result<()> {
 
 	let device = Device::from_interface(interface);
 
-	let (id, rev) = future::block_on(future::try_zip(device.board_id(), device.board_rev()))?;
+	let (id, rev, version) = block_on((device.board_id(), device.board_rev(), device.version()).try_join())?;
 
-	println!("Board Id: {id:?}. Board Rev: {rev:?}");
+	println!("Id: {id:?}");
+	println!("Rev: {rev:?}");
+	println!("Version: {version}");
 
 	Ok(())
 }

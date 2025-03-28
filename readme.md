@@ -6,7 +6,7 @@ Powerful SDR toolkit designed in pure Rust for HackRF One
 
 * [OpenSourceSDRLab R10C](https://opensourcesdrlab.com/products/r10c-hrf-sdr-software-defined-1mhz-to-6ghz-mainboard-development-board-kit)
 
-## Example
+## Examples
 
 ### Open device
 
@@ -42,7 +42,7 @@ device.set_transceiver_mode(TransceiverMode::Receive).await?;
 
 ### Receive
 
-Device implements `futures::Stream`, so just do what you normally do with async streams
+`Device` implements `futures::Stream`, so just do what you normally do with async streams
 
 ```rust
 // Returns Option<Result<Vec<Sample>>>
@@ -53,7 +53,7 @@ let chunk = device.next().await;
 
 ### Transmit
 
-Device implements `futures::Sink` for transmitting by pushing chunk of samples into Sink.
+`Device` implements `futures::Sink` for transmitting by pushing chunk of samples into Sink.
 Note that you must have precise control over the sample chunk feed to avoid gaps.
 
 ```rust

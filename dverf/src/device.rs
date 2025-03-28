@@ -340,11 +340,6 @@ impl Device {
 		self
 	}
 
-	/// Request for transfer. On-demand style
-	pub fn want_transfer(&mut self) -> WantTransfer {
-		WantTransfer { dev: self }
-	}
-
 	fn poll_next(&mut self, cx: &mut Context) -> Poll<Option<Result<Vec<Sample>>>> {
 		while self.bulk_in.pending() < TRANSFER_COUNT {
 			self.bulk_in.submit(RequestBuffer::new(TRANSFER_SIZE));
@@ -443,20 +438,6 @@ impl Device {
 		}
 
 		self.poll_completion(cx)
-	}
-}
-
-#[derive(Debug)]
-#[must_use = "futures do nothing unless you `.await` or poll them"]
-pub struct WantTransfer<'a> {
-	dev: &'a mut Device,
-}
-
-impl Future for WantTransfer<'_> {
-	type Output = Result<()>;
-
-	fn poll(mut self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Self::Output> {
-		self.dev.poll_ready(cx)
 	}
 }
 

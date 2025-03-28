@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["crates/*", "examples/*"]
+members = ["dverf", "examples/*"]
 
 [workspace.package]
 edition = "2024"
@@ -12,8 +12,17 @@ repository = "https://github.com/sigma-logic/dverf.git"
 homepage = "https://github.com/sigma-logic/dverf#readme"
 
 [workspace.dependencies]
-dverf_device = { path = "crates/dverf_device" }
-
-thiserror = { version = "2" }
-futures-lite = { version = "2" }
+dverf = { path = "dverf" }
+shared = { path = "examples/shared" }
 anyhow = { version = "1" }
+
+[workspace.lints.rust]
+[workspace.lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+cargo = { level = "warn", priority = -1 }
+all = { level = "warn", priority = -1 }
+missing_errors_doc = { level = "allow" }
+must_use_candidate = { level = "allow" }
+doc_markdown = { level = "allow" }
+multiple_crate_versions = { level = "allow" }
+cargo_common_metadata = { level = "allow" }

@@ -1,7 +1,7 @@
 use anyhow::{Context, Result};
-use dverf_device::{VENDOR_ID, device::Device};
+use dverf::device::{Device, VENDOR_ID};
+use futures::executor::block_on;
 use futures_concurrency::future::TryJoin;
-use futures_lite::future::block_on;
 
 fn main() -> Result<()> {
 	let device_info = nusb::list_devices()?

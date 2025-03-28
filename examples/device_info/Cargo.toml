@@ -1,12 +1,12 @@
 [package]
-name = "init_device"
+name = "device_info"
 version = "0.1.0"
 edition.workspace = true
 
 [dependencies]
-dverf_device.workspace = true
+dverf.workspace = true
 anyhow.workspace = true
-futures-lite.workspace = true
+futures = { version = "0.3" }
 futures-concurrency = { version = "7" }
 
 nusb = { version = "0.1" }

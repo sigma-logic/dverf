@@ -1,8 +1,8 @@
 use std::time::Instant;
 
 use anyhow::{Context, Result};
-use dverf_device::{VENDOR_ID, device::Device, ty::TransceiverMode};
-use futures_lite::{StreamExt, future::block_on};
+use dverf::device::{Device, TransceiverMode, VENDOR_ID};
+use futures::{StreamExt, executor::block_on};
 
 fn main() -> Result<()> {
 	let device_info = nusb::list_devices()?
@@ -22,23 +22,26 @@ fn main() -> Result<()> {
 		device.set_vga_gain(8).await?;
 		device.set_transceiver_mode(TransceiverMode::Receive).await?;
 
-		let inst = Instant::now();
-
 		let mut samples_received = 0;
 
-		while samples_received < 200_000_000 {
-			let samples_chunk = match device.next().await {
+		let inst = Instant::now();
+
+		while samples_received < 20_000_000 {
+			let chunk = match device.next().await {
 				Some(Ok(it)) => it,
 				Some(Err(err)) => return Err(err.into()),
 				None => unreachable!(),
 			};
 
-			samples_received += samples_chunk.len();
+			samples_received += chunk.len();
+			// Do something with chunks
 		}
 
 		let elapsed = inst.elapsed();
 
 		println!("{} samples received in {}ms", samples_received, elapsed.as_millis());
+
+		device.reset().await?;
 
 		anyhow::Result::<()>::Ok(())
 	})?;

@@ -16,5 +16,8 @@ futures = { version = "0.3" }
 nusb = { version = "0.1" }
 num_enum = { version = "0.7" }
 
+[features]
+internals = []
+
 [lints]
 workspace = true

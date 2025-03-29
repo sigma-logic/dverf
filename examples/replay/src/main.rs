@@ -4,8 +4,8 @@ use anyhow::Context;
 use async_executor::Executor;
 use async_fs::File;
 use dverf::{
-	BytesToSamples, SamplesAsBytes,
 	device::{Device, TRANSFER_SIZE, TransceiverMode, VENDOR_ID},
+	internals,
 };
 use futures::{AsyncReadExt, AsyncWriteExt, SinkExt, StreamExt, io::BufReader};
 use shared::example;
@@ -29,7 +29,7 @@ example! {
 			let sink = device.as_sink();
 
 			while file.read_exact(&mut buf).await.is_ok() {
-				sink.feed(buf.to_samples()).await?;
+				sink.feed(internals::bytes_to_samples(&buf)).await?;
 			}
 
 			sink.flush().await?;
@@ -41,7 +41,7 @@ example! {
 			let mut samples = Vec::new();
 
 			device.set_lna_gain(40).await?;
-			device.set_vga_gain(12).await?;
+			device.set_vga_gain(8).await?;
 			device.set_transceiver_mode(TransceiverMode::Receive).await?;
 
 			let mut received = 0;
@@ -59,7 +59,7 @@ example! {
 
 			let mut file = File::create("samples.iq").await?;
 
-			file.write_all(samples.as_bytes()).await?;
+			file.write_all(internals::samples_as_bytes(&samples)).await?;
 
 			println!("Samples recorded");
 		}

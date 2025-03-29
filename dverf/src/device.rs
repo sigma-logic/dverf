@@ -3,7 +3,6 @@ use std::{
 	collections::VecDeque,
 	fmt::{Debug, Formatter},
 	mem,
-	mem::ManuallyDrop,
 	pin::Pin,
 	task::{Context, Poll, ready},
 };
@@ -13,7 +12,7 @@ use num_enum::{FromPrimitive, IntoPrimitive};
 use nusb::transfer::{Completion, ControlIn, ControlOut, ControlType, Queue, Recipient, RequestBuffer};
 use thiserror::Error;
 
-use crate::{Sample, SamplesAsBytes};
+use crate::{Sample, internals};
 
 /// `vendor_id` is constant for all variations of HackRF
 pub const VENDOR_ID: u16 = 0x1d50;
@@ -352,17 +351,12 @@ impl Device {
 		}
 
 		let data = mem::replace(&mut completion.data, Vec::with_capacity(TRANSFER_SIZE));
-		let mut data = ManuallyDrop::new(data);
-
-		let len = data.len() / 2;
-		let cap = data.capacity() / 2;
-		let ptr = data.as_mut_ptr().cast::<Sample>();
-
-		let chunk = unsafe { Vec::from_raw_parts(ptr, len, cap) };
 
 		self.bulk_in.submit(RequestBuffer::reuse(completion.data, TRANSFER_SIZE));
 
-		Poll::Ready(Some(Ok(chunk)))
+		let samples = internals::bytes_into_samples(data);
+
+		Poll::Ready(Some(Ok(samples)))
 	}
 
 	#[inline]
@@ -378,8 +372,7 @@ impl Device {
 	}
 
 	fn start_send<T: AsRef<[Sample]>>(&mut self, chunk: T) {
-		let chunk_ref = chunk.as_ref();
-		let bytes = chunk_ref.as_bytes();
+		let bytes = internals::samples_as_bytes(chunk.as_ref());
 
 		assert!(self.bulk_out.pending() < TRANSFER_COUNT, "Sink is not ready to accept new items");
 
@@ -449,7 +442,6 @@ impl Stream for Device {
 	}
 }
 
-/// Push style transfer
 impl<T: AsRef<[Sample]>> Sink<T> for Device {
 	type Error = Error;
 

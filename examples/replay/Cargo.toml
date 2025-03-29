@@ -4,7 +4,7 @@ version = "0.1.0"
 edition.workspace = true
 
 [dependencies]
-dverf.workspace = true
+dverf = { workspace = true, features = ["internals"] }
 anyhow.workspace = true
 shared.workspace = true
 

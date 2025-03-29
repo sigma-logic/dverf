@@ -1,6 +1,16 @@
 #![doc = include_str!("../readme.md")]
 
-mod common;
 pub mod device;
 
-pub use common::*;
+#[cfg(not(feature = "internals"))]
+mod internals;
+
+#[cfg(feature = "internals")]
+pub mod internals;
+
+#[derive(Debug, Copy, Clone)]
+#[repr(C)]
+pub struct Sample {
+	pub i: i8,
+	pub q: i8,
+}

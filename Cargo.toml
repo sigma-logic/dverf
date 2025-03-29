@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["dverf", "dverf_app", "examples/*"]
+members = ["dverf", "examples/*"]
 
 [workspace.package]
 edition = "2024"

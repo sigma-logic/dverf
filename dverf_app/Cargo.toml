@@ -1,0 +1,27 @@
+[package]
+name = "dverf_app"
+version = "0.1.0"
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+keywords.workspace = true
+description.workspace = true
+repository.workspace = true
+homepage.workspace = true
+
+[dependencies]
+dverf = { workspace = true }
+tracing = { version = "0.1" }
+eframe = { version = "0.31" }
+futures = { version = "0.3" }
+nusb = { version = "0.1" }
+smol = { version = "2" }
+async-channel = { version = "2.3" }
+num_cpus = { version = "1" }
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+arc-swap = { version = "1.7" }
+async-io = { version = "2.4" }
+futures-concurrency = { version = "7" }
+
+[lints]
+workspace = true

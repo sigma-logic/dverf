@@ -1,7 +1,7 @@
 use std::{
 	cmp::Ordering,
 	collections::VecDeque,
-	fmt::{Debug, Formatter},
+	fmt::{Debug, Display, Formatter},
 	mem,
 	pin::Pin,
 	task::{Context, Poll, ready},
@@ -300,6 +300,19 @@ pub enum BoardId {
 	Unrecognized = 0xFE,
 }
 
+impl Display for BoardId {
+	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		match self {
+			BoardId::Jellybean => write!(f, "Jellybean"),
+			BoardId::Jawbreaker => write!(f, "Jawbreaker"),
+			BoardId::HackrfOneOg => write!(f, "HackRF One Og"),
+			BoardId::Rad10 => write!(f, "Rad 10"),
+			BoardId::HackrfOneR9 => write!(f, "HackRF One R9"),
+			BoardId::Unrecognized => write!(f, "Unrecognized"),
+		}
+	}
+}
+
 #[derive(Debug, Copy, Clone, FromPrimitive)]
 #[repr(u8)]
 pub enum BoardRev {
@@ -316,6 +329,25 @@ pub enum BoardRev {
 	GsgR10 = 0x85,
 	#[num_enum(default)]
 	Unrecognized = 0xFE,
+}
+
+impl Display for BoardRev {
+	fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+		match self {
+			BoardRev::Old => write!(f, "Old"),
+			BoardRev::R6 => write!(f, "R6"),
+			BoardRev::R7 => write!(f, "R7"),
+			BoardRev::R8 => write!(f, "R8"),
+			BoardRev::R9 => write!(f, "R9"),
+			BoardRev::R10 => write!(f, "R10"),
+			BoardRev::GsgR6 => write!(f, "GSG R6"),
+			BoardRev::GsgR7 => write!(f, "GSG R7"),
+			BoardRev::GsgR8 => write!(f, "GSG R8"),
+			BoardRev::GsgR9 => write!(f, "GSG R9"),
+			BoardRev::GsgR10 => write!(f, "GSG R10"),
+			BoardRev::Unrecognized => write!(f, "Unrecognized"),
+		}
+	}
 }
 
 #[derive(Debug, Copy, Clone, IntoPrimitive)]

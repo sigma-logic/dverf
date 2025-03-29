@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["dverf", "examples/*"]
+members = ["dverf", "dverf_app", "examples/*"]
 
 [workspace.package]
 edition = "2024"
@@ -26,3 +26,4 @@ must_use_candidate = { level = "allow" }
 doc_markdown = { level = "allow" }
 multiple_crate_versions = { level = "allow" }
 cargo_common_metadata = { level = "allow" }
+similar_names = { level = "allow" }

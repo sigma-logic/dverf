@@ -1,6 +1,6 @@
 [package]
 name = "dverf"
-version = "0.1.0"
+version = "0.2.0"
 edition.workspace = true
 authors.workspace = true
 license.workspace = true
@@ -15,9 +15,7 @@ thiserror = { version = "2" }
 futures = { version = "0.3" }
 nusb = { version = "0.1" }
 num_enum = { version = "0.7" }
-
-[features]
-internals = []
+num = { version = "0.4" }
 
 [lints]
 workspace = true

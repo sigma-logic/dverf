@@ -1,5 +1,5 @@
 use anyhow::{Context, Result};
-use dverf::device::{Device, VENDOR_ID};
+use dverf::{Device, VENDOR_ID};
 use futures::executor::block_on;
 use futures_concurrency::future::TryJoin;
 

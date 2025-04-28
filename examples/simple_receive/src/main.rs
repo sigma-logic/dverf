@@ -1,7 +1,7 @@
 use std::time::Instant;
 
 use anyhow::{Context, Result};
-use dverf::device::{Device, TransceiverMode, VENDOR_ID};
+use dverf::{Device, TransceiverMode, VENDOR_ID};
 use futures::{StreamExt, executor::block_on};
 
 fn main() -> Result<()> {
@@ -43,7 +43,7 @@ fn main() -> Result<()> {
 
 		device.reset().await?;
 
-		anyhow::Result::<()>::Ok(())
+		Result::<()>::Ok(())
 	})?;
 
 	Ok(())

@@ -20,8 +20,6 @@ use thiserror::Error;
 pub mod internals {
 	use std::{mem::ManuallyDrop, slice};
 
-	use num::ToPrimitive;
-
 	use crate::Sample;
 
 	#[inline]
@@ -48,7 +46,7 @@ pub mod internals {
 	}
 
 	/// # Panics
-	/// In case the length of slice is odd
+	/// In case the length of a slice is odd
 	#[inline]
 	pub fn bytes_as_samples(slice: &[u8]) -> &[Sample] {
 		assert_eq!(slice.len() & 1, 0, "Slice length must be multiply of 2");
@@ -63,15 +61,6 @@ pub mod internals {
 	pub fn bytes_to_samples(slice: &[u8]) -> Vec<Sample> {
 		let samples = bytes_as_samples(slice);
 		samples.to_owned()
-	}
-
-	/// # Panics
-	/// Must not panic
-	#[inline]
-	pub fn norm_i8(value: i8) -> f64 {
-		let unnorm = value.to_f64().unwrap();
-
-		if value < 0 { unnorm / 128.0 } else { unnorm / 127.0 }
 	}
 }
 
@@ -238,7 +227,7 @@ impl Device {
 		Ok(())
 	}
 
-	/// Sets the baseband filter bandwidth. Should be less that sample rate to
+	/// Sets the baseband filter bandwidth. Should be less than sample rate to
 	/// reduce aliasing
 	pub async fn set_baseband_filter_bandwidth(&self, hz: u32) -> Result<()> {
 		control_out(
@@ -257,7 +246,7 @@ impl Device {
 	/// Actual sample rate is `hz / divider`
 	///
 	/// # Example
-	/// For 20 Mhz sample rate `hz = 20_000_000`, `divider = 10`
+	/// For 20 Mhz sample rate `hz = 200_000_000`, `divider = 10`
 	pub async fn set_sample_rate(&self, hz: u32, divider: u32) -> Result<()> {
 		let (hz_le, divider_le) = (hz.to_le_bytes(), divider.to_le_bytes());
 		let mut data = [0u8; 8];

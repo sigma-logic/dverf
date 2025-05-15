@@ -13,7 +13,7 @@ Powerful SDR toolkit designed in pure Rust for HackRF One
 Open usb device as you like with [nusb](https://docs.rs/nusb/) crate
 
 ```rust
-use dverf::device::{Device, VENDOR_ID};
+use dverf::{Device, VENDOR_ID};
 
 fn open() -> anyhow::Result<Device> {
   let device_info = nusb::list_devices()?
